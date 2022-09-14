@@ -1,9 +1,13 @@
+from django.http.response import JsonResponse
 from django.shortcuts import render
 
 # Create your views here.
 
 def index(request):
-    context = {
-        "title": "Weather Site API"
+    if(request.method == "GET"):
+        method = request.method
+    data = {
+        "title": "Weather Site API",
+        "method": method
     }
-    return render(request, "index.html", context)
+    return JsonResponse(data)
