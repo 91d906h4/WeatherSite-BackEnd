@@ -1,6 +1,5 @@
 import requests
 import json
-from flask import jsonify
 
 def request_api(api_url):
     weather_res = requests.get(api_url)

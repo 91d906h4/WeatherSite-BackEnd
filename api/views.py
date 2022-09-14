@@ -1,5 +1,4 @@
 from django.http.response import JsonResponse
-from django.shortcuts import render
 from .functions.get_weather import *
 
 # Create your views here.
