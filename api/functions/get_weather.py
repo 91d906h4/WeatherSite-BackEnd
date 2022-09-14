@@ -16,25 +16,17 @@ def get_weather_data():
     stationid = input("輸入測站ID: ")
     test = re.search(r'\d+', stationid).group(0)
 
-    weather_element1 = ["高度(m)", "風向(度)", "風速(m/s)", "溫度(°C)", "相對濕度(%)", "測站氣壓(百帕)", "日累積雨量(mm)", "小時最大陣風風速(m/s)",
-                        "小時最大陣風風向(度)", "小時最大陣風時間(小時分鐘)", "本時最大10分鐘平均風速(m/s)", "本時最大10分鐘平均風向(度)",
-                        "本時最大10分鐘平均風速發生時間(小時分鐘)", "小時紫外線指數", "本日最高溫(°C)", "本日最高溫發生時間(小時分鐘)",
-                        "本日最低溫(°C)", "本日最低溫發生時間(小時分鐘)", "本日總日照時數(hr)", "十分鐘盛行能見度(km)", "十分鐘天氣現象描述"]
-
-    weather_element2 = ["高度(m)", "風向(度)", "風速(m/s)", "溫度(°C)", "相對濕度(%)", "測站氣壓(百帕)", "日累積雨量(mm)", "小時最大陣風風速(m/s)",
-                        "小時最大陣風風向(度)", "小時最大陣風時間(yyyy-MM-ddThh:mm:ss+08:00)", "本日最高溫(°C)", "本日最高溫發生時間(小時分鐘)",
-                        "本日最低溫(°C)", "本日最低溫發生時間(小時分鐘)"]
-    url1 = f"https://opendata.cwb.gov.tw/api/v1/rest/datastore/O-A0003-001?Authorization=CWB-0BFC5710-D0E8-46A4-9B4A" \
-           f"-6386C222F445&stationId={stationid} "
-    url2 = f'https://opendata.cwb.gov.tw/api/v1/rest/datastore/O-A0001-001?Authorization=CWB-0BFC5710-D0E8-46A4-9B4A' \
-           f'-6386C222F445&stationId={stationid} '
-
     if stationid == test:
-        url = url1
-        weather_element = weather_element1
+        url = f'https://opendata.cwb.gov.tw/api/v1/rest/datastore/O-A0003-001?Authorization=CWB-0BFC5710-D0E8-46A4-9B4A-6386C222F445&stationId={stationid} '
+        weather_element = ["高度(m)", "風向(度)", "風速(m/s)", "溫度(°C)", "相對濕度(%)", "測站氣壓(百帕)", "日累積雨量(mm)", "小時最大陣風風速(m/s)",
+                           "小時最大陣風風向(度)", "小時最大陣風時間(小時分鐘)", "本時最大10分鐘平均風速(m/s)", "本時最大10分鐘平均風向(度)",
+                           "本時最大10分鐘平均風速發生時間(小時分鐘)", "小時紫外線指數", "本日最高溫(°C)", "本日最高溫發生時間(小時分鐘)",
+                           "本日最低溫(°C)", "本日最低溫發生時間(小時分鐘)", "本日總日照時數(hr)", "十分鐘盛行能見度(km)", "十分鐘天氣現象描述"]
     else:
-        url = url2
-        weather_element = weather_element2
+        url = f'https://opendata.cwb.gov.tw/api/v1/rest/datastore/O-A0001-001?Authorization=CWB-0BFC5710-D0E8-46A4-9B4A-6386C222F445&stationId={stationid} '
+        weather_element = ["高度(m)", "風向(度)", "風速(m/s)", "溫度(°C)", "相對濕度(%)", "測站氣壓(百帕)", "日累積雨量(mm)", "小時最大陣風風速(m/s)",
+                           "小時最大陣風風向(度)", "小時最大陣風時間(yyyy-MM-ddThh:mm:ss+08:00)", "本日最高溫(°C)", "本日最高溫發生時間(小時分鐘)",
+                           "本日最低溫(°C)", "本日最低溫發生時間(小時分鐘)"]
 
     weather_json = request_api(url)
 
