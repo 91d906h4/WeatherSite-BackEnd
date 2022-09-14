@@ -3,7 +3,6 @@ import re
 import requests
 import json
 
-
 def request_api(api_url):
     # request_api
     weather_res = requests.get(api_url)
