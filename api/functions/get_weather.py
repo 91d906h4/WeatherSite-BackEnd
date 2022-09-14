@@ -1,5 +1,6 @@
 import requests
 import json
+from flask import jsonify
 
 def request_api(api_url):
     weather_res = requests.get(api_url)
@@ -21,6 +22,8 @@ def get_weather_data(stationid):
                            "本日最低溫(°C)", "本日最低溫發生時間(小時分鐘)"]
 
     weather_json = request_api(url)
+
+    if len(weather_json["records"]["location"]) == 0: return "error"
 
     list_station = ["station", "station_id", "latitude", "longitude", "latest_update_time"] # ["測站", "測站ID", "緯度", "經度", "最後更新時間"]
     station_data = [weather_json["records"]["location"][0]["locationName"],
