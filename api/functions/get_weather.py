@@ -8,12 +8,11 @@ def request_api(api_url):
     # request_api
     weather_res = requests.get(api_url)
     get_weather_json = json.loads(weather_res.text)
+
     return get_weather_json
 
 
-def get_weather_data():
-    # main code
-    stationid = input("輸入測站ID: ")
+def get_weather_data(stationid):
     test = re.search(r'\d+', stationid).group(0)
 
     if stationid == test:
