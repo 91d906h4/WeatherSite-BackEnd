@@ -2,7 +2,6 @@ import requests
 import json
 
 def request_api(api_url):
-    # request_api
     weather_res = requests.get(api_url)
     get_weather_json = json.loads(weather_res.text)
     return get_weather_json
@@ -23,7 +22,7 @@ def get_weather_data(stationid):
 
     weather_json = request_api(url)
 
-    list_station = ["測站", "測站ID", "經度", "緯度", "最後更新時間"]
+    list_station = ["station", "station_id", "latitude", "longitude", "latest_update_time"] # ["測站", "測站ID", "緯度", "經度", "最後更新時間"]
     station_data = [weather_json["records"]["location"][0]["locationName"],
                     weather_json["records"]["location"][0]["stationId"],
                     weather_json["records"]["location"][0]["lat"],
@@ -31,17 +30,11 @@ def get_weather_data(stationid):
                     weather_json["records"]["location"][0]["time"]["obsTime"]]
     station_dict = dict(zip(list_station, station_data))
 
-    # setting weather data
-    value = []
+    # set weather data value
     weather_dict = {}
-
-    # get weather data value
     for i in weather_json["records"]["location"][0]["weatherElement"]:
-        value.append(i["elementValue"])
-
-    # input data to dict
-    weather_dict = dict(zip(weather_element, value))
+        weather_dict[i["elementName"]] = i["elementValue"]
 
     station_dict.update(weather_dict)
 
-    return stationid, station_dict
+    return station_dict

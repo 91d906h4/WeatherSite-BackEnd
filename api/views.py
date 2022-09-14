@@ -4,8 +4,8 @@ from .functions.get_weather import *
 
 # Create your views here.
 
-def index(request, id):
-    weather_data = get_weather_data("466950")[1] # C0A86 466950
+def get(request, id):
+    weather_data = get_weather_data(id) # C0A86 466950
     data = {
         "title": "Weather Site API",
         "method": request.method,
