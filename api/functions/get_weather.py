@@ -23,7 +23,7 @@ def get_weather_data(stationid):
     weather_data = request_api(url)
 
     # if api server return nothing
-    if len(weather_data["records"]["location"]) == 0: return "error"
+    if len(weather_data["records"]["location"]) == 0: return {"status": "error"}
 
     list_station = ["station", "station_id", "latitude", "longitude", "latest_update_time"] # ["測站", "測站ID", "緯度", "經度", "最後更新時間"]
     station_data = [weather_data["records"]["location"][0]["locationName"],

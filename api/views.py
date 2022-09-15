@@ -1,7 +1,10 @@
-from django.http.response import JsonResponse
+from django.http.response import JsonResponse, HttpResponse
 from .functions.get_weather import *
 
 # Create your views here.
+
+def index(request):
+    return HttpResponse("Hello, World!")
 
 def get(request, id):
     data = get_weather_data(id) # C0A770 466950
