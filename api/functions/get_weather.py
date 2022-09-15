@@ -3,8 +3,8 @@ import json
 
 def request_api(api):
     res = requests.get(api)
-    json = json.loads(res.text)
-    return json
+    data = json.loads(res.text)
+    return data
 
 def get_weather_data(stationid):
     stationid = str(stationid)
