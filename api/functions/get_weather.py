@@ -1,10 +1,10 @@
 import requests
 import json
 
-def request_api(api_url):
-    weather_res = requests.get(api_url)
-    get_weather_json = json.loads(weather_res.text)
-    return get_weather_json
+def request_api(api):
+    res = requests.get(api)
+    json = json.loads(res.text)
+    return json
 
 def get_weather_data(stationid):
     stationid = str(stationid)
@@ -20,21 +20,22 @@ def get_weather_data(stationid):
                            "小時最大陣風風向(度)", "小時最大陣風時間(yyyy-MM-ddThh:mm:ss+08:00)", "本日最高溫(°C)", "本日最高溫發生時間(小時分鐘)",
                            "本日最低溫(°C)", "本日最低溫發生時間(小時分鐘)"]
 
-    weather_json = request_api(url)
+    weather_data = request_api(url)
 
-    if len(weather_json["records"]["location"]) == 0: return "error"
+    # if api server return nothing
+    if len(weather_data["records"]["location"]) == 0: return "error"
 
     list_station = ["station", "station_id", "latitude", "longitude", "latest_update_time"] # ["測站", "測站ID", "緯度", "經度", "最後更新時間"]
-    station_data = [weather_json["records"]["location"][0]["locationName"],
-                    weather_json["records"]["location"][0]["stationId"],
-                    weather_json["records"]["location"][0]["lat"],
-                    weather_json["records"]["location"][0]["lon"],
-                    weather_json["records"]["location"][0]["time"]["obsTime"]]
+    station_data = [weather_data["records"]["location"][0]["locationName"],
+                    weather_data["records"]["location"][0]["stationId"],
+                    weather_data["records"]["location"][0]["lat"],
+                    weather_data["records"]["location"][0]["lon"],
+                    weather_data["records"]["location"][0]["time"]["obsTime"]]
     station_dict = dict(zip(list_station, station_data))
 
     # set weather data value
     weather_dict = {}
-    for i in weather_json["records"]["location"][0]["weatherElement"]:
+    for i in weather_data["records"]["location"][0]["weatherElement"]:
         weather_dict[i["elementName"]] = i["elementValue"]
 
     station_dict.update(weather_dict)
