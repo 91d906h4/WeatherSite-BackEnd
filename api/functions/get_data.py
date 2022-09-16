@@ -36,8 +36,21 @@ def get_weather_data(stationid):
 
     return station_dict
 
+def split_list(datalist, n):
+    # 將list分割 (l:list, n:每個matrix裡面有n個元素)
+    for idx in range(0, len(datalist), n):
+        yield datalist[idx:idx + n]
+
+
 def get_city_station_data(city):
-    response = requests.get("https://e-service.cwb.gov.tw/wdps/obs/state.htm")
-    soup = BeautifulSoup(response.text, "html.parser")
-    soup.decode("utf-8")
-    return soup.prettify()
+    html = requests.get('https://e-service.cwb.gov.tw/wdps/obs/state.htm#description')
+    html.encoding = "utf-8"
+    soup = BeautifulSoup(html.text, 'html.parser')
+    station_table = soup.table
+
+    data = station_table.find_all('td')
+    data_list = [element.text if element.text != "" else "N/A" for element in data]
+
+    data_list = list(split_list(data_list, 12))
+
+    return data_list
